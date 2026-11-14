@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #0f172a;
+    margin: 0;
+}
+
+.topo {
+    background-color: #0b192c;
+    color: #ffffff;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-sair, .btn-primario {
+    min-height: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.btn-verde {
+    background-color: #166534;
+    color: #ffffff;
+}
+
+.btn-azul {
+    background-color: #0b192c;
+    color: #ffffff;
+}
+
+.valor-destaque {
+    color: #0b192c;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
