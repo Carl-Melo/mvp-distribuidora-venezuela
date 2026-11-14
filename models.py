@@ -38,3 +38,4 @@ class Venda(db.Model):
     data_hora = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
     cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=True)
+    cliente = db.relationship('Cliente', backref='vendas')

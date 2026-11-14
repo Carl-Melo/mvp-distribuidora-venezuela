@@ -9,6 +9,7 @@ def client():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
     with app.test_client() as client:
         with app.app_context():
+            db.drop_all()
             db.create_all()
             usuario = Usuario(nome='Lucia Color', email='lucia@venezuela.com')
             usuario.definir_senha('SenhaSegura123')
