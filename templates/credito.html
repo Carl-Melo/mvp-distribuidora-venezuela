@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribuidora Venezuela - Crédito Cliente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topo">
+        <a href="/" class="btn-sair" aria-label="Voltar ao início">← Início</a>
+        <h1>Crédito Cliente</h1>
+    </header>
+    <main class="container">
+        {% for venda in pendentes %}
+        <article class="card-kpi">
+            <h2>{{ venda.cliente.nome_razao }}</h2>
+            <p class="valor-destaque">R$ {{ "%.2f"|format(venda.valor_venda) }}</p>
+            <span class="status-pendente">🕒 Pendente</span>
+            <div class="acoes-cartao">
+                <form action="/dar-baixa/{{ venda.id }}" method="POST">
+                    <button type="submit" class="btn-primario btn-verde">Dar Baixa (Pago)</button>
+                </form>
+                {% if venda.cliente.telefone_whatsapp %}
+                <a href="https://wa.me{{ venda.cliente.telefone_whatsapp }}?text=Olá, segue o resumo do seu saldo na Distribuidora Venezuela: R$ {{ venda.valor_venda }}" target="_blank" class="btn-primario btn-azul">Compartilhar Extrato</a>
+                {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </main>
+</body>
+</html>
