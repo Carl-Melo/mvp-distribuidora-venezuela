@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribuidora Venezuela - Painel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topo">
+        <h1>Distribuidora Venezuela</h1>
+        <span>Olá, Lucia</span>
+        <a href="/logout" class="btn-sair" aria-label="Encerrar sessão">Sair</a>
+    </header>
+    <main class="container">
+        <section class="resumo">
+            <div class="card-kpi">
+                <h2>Faturamento</h2>
+                <p class="valor-destaque">R$ {{ "%.2f"|format(faturamento) }}</p>
+            </div>
+            <div class="card-kpi">
+                <h2>Lucro</h2>
+                <p class="valor-destaque">R$ {{ "%.2f"|format(lucro) }}</p>
+            </div>
+        </section>
+        <nav class="acoes-principais">
+            <a href="/nova-venda" class="btn-primario btn-verde">+ Registrar Nova Venda</a>
+            <a href="/credito-cliente" class="btn-primario btn-azul">Consultar Crédito Cliente ({{ pendencias }})</a>
+        </nav>
+    </main>
+</body>
+</html>
