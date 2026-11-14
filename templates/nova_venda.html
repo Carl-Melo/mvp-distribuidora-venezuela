@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Venda - Distribuidora Venezuela</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
+      {% endif %}
+    {% endwith %}
+    <form method="POST">
+        <input type="number" step="0.01" name="valor_venda" required>
+        <input type="number" step="0.01" name="custo_estimado" required>
+        <select name="modalidade">
+            <option value="varejo">Varejo</option>
+            <option value="atacado">Atacado</option>
+        </select>
+        <select name="forma_pagamento">
+            <option value="pix">Pix</option>
+            <option value="credito">Crédito Cliente</option>
+        </select>
+        <select name="cliente_id">
+            <option value="">Selecione...</option>
+            {% for c in clientes %}
+            <option value="{{ c.id }}">{{ c.nome_razao }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Confirmar Venda</button>
+    </form>
+</body>
+</html>
