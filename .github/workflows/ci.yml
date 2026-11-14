@@ -1,0 +1,31 @@
+name: CI - Testes Automatizados MVP
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependências do projeto
+        run: |
+          python -m pip install --upgrade pip
+          pip install flask flask-sqlalchemy psycopg[binary] pytest pytest-cov
+
+      - name: Executar testes unitários e de integração
+        env:
+          DATABASE_URL: "sqlite:///:memory:"
+        run: |
+          pytest -v --cov=. --cov-report=term-missing
