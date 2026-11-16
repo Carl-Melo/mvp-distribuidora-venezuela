@@ -5,10 +5,25 @@ from models import db, Usuario, Cliente, Venda
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'chave-desenvolvimento-segura')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://localhost/distribuidora')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///distribuidora.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+
+def inicializar_banco():
+    db.create_all()
+    if not Usuario.query.first():
+        admin = Usuario(nome='Operador Balcao', email='admin@distribuidora.com', ativo=True)
+        admin.definir_senha('123456')
+        db.session.add(admin)
+    if not Cliente.query.first():
+        c1 = Cliente(nome_razao='Carlos Silva (Mercearia Central)', tipo_cliente='juridica', telefone_whatsapp='5595991112222', status='ativo')
+        c2 = Cliente(nome_razao='Maria Oliveira', tipo_cliente='fisica', telefone_whatsapp='5595993334444', status='ativo')
+        db.session.add_all([c1, c2])
+    db.session.commit()
+
+with app.app_context():
+    inicializar_banco()
 
 def calcular_lucro(valor_venda, custo_estimado):
     return Decimal(str(valor_venda)) - Decimal(str(custo_estimado))
@@ -63,3 +78,6 @@ def dar_baixa(venda_id):
     venda.status_pagamento = 'pago'
     db.session.commit()
     return redirect(url_for('credito_cliente'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
